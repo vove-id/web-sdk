@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "noImplicitAny": true,
+      "outDir": "build/types",
+      "module": "es6",
+      "target": "es5",
+      "allowJs": false,
+      "sourceMap": true,
+      "declaration": true,
+      "emitDeclarationOnly": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "lib": ["es2021", "dom"],
+      "moduleResolution": "node",
+    },
+    "include": ["src/lib"],
+    "exclude": ["src/lib/**/tests"],
+}
