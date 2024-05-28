@@ -80,7 +80,7 @@ function onVerificationComplete(status: string) {
 function startIDScan() {
     fetchNewToken().then(async (authToken) => {
         const sessionToken = await startUserSession(authToken);
-        vove.processIDMatching({sessionToken, environment: VoveEnvironment.SANDBOX, onVerificationComplete, local: locale as VoveLocal});
+        vove.processIDMatching({sessionToken, environment: VoveEnvironment.SANDBOX, onVerificationComplete, local: locale as VoveLocal, enableVocalGuidance: true});
     });
 }
 
