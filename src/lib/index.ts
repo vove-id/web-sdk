@@ -16,7 +16,8 @@ type VoveConfig = {
     local?: VoveLocal,
     environment: VoveEnvironment,
     onVerificationComplete?: (status: VoveStatus) => void,
-    enableVocalGuidance?: boolean;
+    enableVocalGuidance?: boolean,
+    publicKey: string,
 }
 class Vove {
     constructor() {
@@ -24,7 +25,7 @@ class Vove {
     }
 
     processIDMatching = (voveConfig: VoveConfig) => {
-        const {sessionToken, environment} = voveConfig;
+        const {sessionToken, environment, publicKey} = voveConfig;
 
         window.addEventListener("message", (event) => {
             if (event.data.eventName === "verification_completed") {
@@ -33,7 +34,7 @@ class Vove {
         });
         const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:5173" : "https://web.voveid.com";
 
-        window.open(`${baseURL}/?authToken=${sessionToken}&environment=${environment}&lg=${voveConfig.local}&enableVocalGuidance=${voveConfig.enableVocalGuidance || false}`, "popup", "width=800,height=800");
+        window.open(`${baseURL}/?authToken=${sessionToken}&publicKey=${publicKey}&environment=${environment}&lg=${voveConfig.local}&enableVocalGuidance=${voveConfig.enableVocalGuidance || false}`, "popup", "width=800,height=800");
     };
 }
 

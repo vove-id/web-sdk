@@ -70,18 +70,23 @@ if (selector) {
     });
 }
 
-const AuthURL = "https://demo-api.voveid.com";
+const AuthURL = "https://demo-api.voveid.net";
 
 function onVerificationComplete(status: string) {
+    console.log("ID Matching completed with status: ", status);
     if (status === "success") {
         console.log("ID Matching successful");
     }
 }
-function startIDScan() {
+let sessionToken: string;
+window.onload = async function() {
     fetchNewToken().then(async (authToken) => {
-        const sessionToken = await startUserSession(authToken);
-        vove.processIDMatching({sessionToken, environment: VoveEnvironment.SANDBOX, onVerificationComplete, local: locale as VoveLocal, enableVocalGuidance: true});
+        sessionToken = await startUserSession(authToken);
     });
+}
+function startIDScan() {
+    const publicKey = "6fc3fb00391916cfcd0e47d3a11a243054413ffcf220f9b3adb8d3c6db307842"
+    vove.processIDMatching({sessionToken, environment: VoveEnvironment.SANDBOX, onVerificationComplete, local: locale as VoveLocal, enableVocalGuidance: true, publicKey});
 }
 
 async function fetchNewToken() {
@@ -92,7 +97,7 @@ async function fetchNewToken() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "username": "khalid",
+                "email": "demo@voveid.net",
                 "password": "LGyxsf^zp6HaTyyTWRhzD2&s"
             })
         })
